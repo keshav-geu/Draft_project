@@ -1,0 +1,35 @@
+def dfs(graph, start, goal):
+    visited = set()
+    stack = [start]
+    while stack:
+        node = stack.pop()
+        if node not in visited:
+            print(node, end=' ')
+            visited.add(node)
+            if node == goal:
+                print(f"\n✅ Found target node: {goal}")
+                return True
+            stack.extend(reversed(graph.get(node, [])))
+    print(f"\n❌ Target node '{goal}' not found in the graph.")
+    return False
+
+if __name__ == "__main__":
+    sample_graph = {
+        'A': ['B', 'S'],
+        'B': ['A'],
+        'S': ['A', 'G', 'C'],
+        'G': ['S', 'D'],
+        'C': ['S', 'D', 'F'],
+        'D': ['G', 'C', 'H'],
+        'F': ['C', 'E'],
+        'H': ['D', 'E'],
+        'E': ['F', 'H']
+    }
+
+    print("--- Searching for node 'G' starting from 'A' ---")
+    dfs(sample_graph, 'A', 'G')
+    
+    print("\n" + "="*45 + "\n")
+
+    print("--- Searching for node 'Z' starting from 'A' ---")
+    dfs(sample_graph, 'A', 'Z')
